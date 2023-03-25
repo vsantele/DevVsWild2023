@@ -7,14 +7,12 @@ import 'package:racoonator/racoonator_game.dart';
 
 class DevEnemy extends SpriteAnimationComponent
     with HasGameRef<RacoonatorGame> {
-  final Vector2 gridPosition;
   double xOffset;
   late int side;
 
   final Vector2 velocity = Vector2.zero();
 
   DevEnemy({
-    required this.gridPosition,
     required this.xOffset,
     required this.side,
   }) : super(size: Vector2.all(64), anchor: Anchor.bottomLeft);
@@ -31,7 +29,7 @@ class DevEnemy extends SpriteAnimationComponent
     );
     position = Vector2(
       (xOffset + (size.x / 2)),
-      game.size.y - (gridPosition.y * size.y) - (size.y / 2),
+      game.size.y - (size.y),
     );
     add(RectangleHitbox()..collisionType = CollisionType.passive);
     add(

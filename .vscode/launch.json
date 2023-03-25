@@ -9,7 +9,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "args": ["--web-hostname", "0.0.0.0"]
+      "args": ["--web-hostname", "0.0.0.0", "--web-port", "8080", "--web-launch-url", "http://localhost:8080"]
     },
     {
       "name": "dev_vs_wild_game_2023 (profile mode)",

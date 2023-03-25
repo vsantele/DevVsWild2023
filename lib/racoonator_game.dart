@@ -12,6 +12,7 @@ import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/star.dart';
 import 'overlays/button.dart';
+import 'overlays/command.dart';
 import 'overlays/hud.dart';
 
 class RacoonatorGame extends FlameGame
@@ -77,6 +78,7 @@ class RacoonatorGame extends FlameGame
     if (loadHud) {
       add(Hud());
       add(Button());
+      add(Command());
     }
   }
 

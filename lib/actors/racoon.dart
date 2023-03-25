@@ -1,17 +1,20 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/events.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:racoonator/racoonator_game.dart';
-
+import 'package:flame/experimental.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
+import '../overlays/button.dart';
 import 'dev.dart';
 
 class RacoonPlayer extends SpriteAnimationComponent
     with KeyboardHandler, CollisionCallbacks, HasGameRef<RacoonatorGame> {
-  final Vector2 velocity = Vector2.zero();
+  Vector2 velocity = Vector2.zero();
 
   double moveSpeed = 200;
   int horizontalDirection = 0;

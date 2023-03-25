@@ -4,6 +4,7 @@ import 'package:flame/effects.dart';
 import 'package:flutter/services.dart';
 import 'package:racoonator/racoonator_game.dart';
 
+import '../objects/bullet.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
@@ -39,6 +40,12 @@ class RacoonPlayer extends SpriteAnimationComponent
     );
   }
 
+  void fire() {
+    final bullet =
+        Bullet(position: position, horizontalDirection: scale.x > 0 ? 1 : -1);
+    game.add(bullet);
+  }
+
   @override
   Future<void> onLoad() async {
     animation = SpriteAnimation.fromFrameData(
@@ -65,6 +72,10 @@ class RacoonPlayer extends SpriteAnimationComponent
             keysPressed.contains(LogicalKeyboardKey.arrowRight))
         ? 1
         : 0;
+
+    if (keysPressed.contains(LogicalKeyboardKey.space)) {
+      fire();
+    }
 
     return true;
   }

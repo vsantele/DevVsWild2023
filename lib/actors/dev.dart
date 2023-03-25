@@ -3,10 +3,11 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:racoonator/objects/bullet.dart';
 import 'package:racoonator/racoonator_game.dart';
 
 class DevEnemy extends SpriteAnimationComponent
-    with HasGameRef<RacoonatorGame> {
+    with CollisionCallbacks, HasGameRef<RacoonatorGame> {
   double xOffset;
   late int side;
 
@@ -40,6 +41,17 @@ class DevEnemy extends SpriteAnimationComponent
         ),
       ),
     );
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is Bullet) {
+      removeFromParent();
+      other.removeFromParent();
+      game.starsCollected++;
+    }
+
+    super.onCollision(intersectionPoints, other);
   }
 
   @override

@@ -119,13 +119,14 @@ class RacoonatorGame extends FlameGame
           ));
         }
         if (Random().nextInt(100) < 50) {
+          bool side = Random().nextBool();
           add(DevEnemy(
               gridPosition: Vector2(
-                -1,
+                1,
                 1,
               ),
-              xOffset: 0,
-              side: Random().nextBool() ? 1 : -1));
+              xOffset: side ? size.x : -100,
+              side: side ? -1 : 1));
         }
       } else {
         gameOver();

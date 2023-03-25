@@ -36,4 +36,10 @@ class Star extends SpriteComponent with HasGameRef<RacoonatorGame> {
       ),
     );
   }
+
+  @override
+  void update(double dt) {
+    if (game.health <= 0) removeFromParent();
+    super.update(dt);
+  }
 }

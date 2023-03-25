@@ -23,6 +23,7 @@ class RacoonPlayer extends SpriteAnimationComponent
 
   void hit() {
     if (!hitByEnemy) {
+      game.health--;
       hitByEnemy = true;
     }
     add(
@@ -30,7 +31,7 @@ class RacoonPlayer extends SpriteAnimationComponent
         EffectController(
           alternate: true,
           duration: 0.1,
-          repeatCount: 6,
+          repeatCount: 5,
         ),
       )..onComplete = () {
           hitByEnemy = false;
@@ -84,6 +85,10 @@ class RacoonPlayer extends SpriteAnimationComponent
       position.x = game.size.x - size.x / 2;
     }
 
+    if (game.health <= 0) {
+      removeFromParent();
+    }
+
     super.update(dt);
   }
 
@@ -108,6 +113,7 @@ class RacoonPlayer extends SpriteAnimationComponent
 
     if (other is Star) {
       other.removeFromParent();
+      game.starsCollected++;
     }
 
     if (other is DevEnemy) {

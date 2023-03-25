@@ -10,6 +10,7 @@ import 'managers/segment_manager.dart';
 import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/star.dart';
+import 'overlays/hud.dart';
 
 class RacoonatorGame extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
@@ -18,7 +19,10 @@ class RacoonatorGame extends FlameGame
   late RacoonPlayer _racoon;
 
   double objectSpeed = 0.0;
+  int starsCollected = 0;
+  int health = 3;
 
+  bool inGame = false;
 
   RacoonatorGame();
 
@@ -33,7 +37,7 @@ class RacoonatorGame extends FlameGame
       'star.png',
       'water_enemy.png',
     ]);
-    initializeGame();
+    initializeGame(true);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {
@@ -67,7 +71,7 @@ class RacoonatorGame extends FlameGame
     }
   }
 
-  void initializeGame() {
+  void initializeGame(bool loadHud) {
     // Assume that size.x < 3200
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
@@ -80,6 +84,31 @@ class RacoonatorGame extends FlameGame
       position: Vector2(128, canvasSize.y - 70),
     );
     add(_racoon);
+    if (loadHud) {
+      add(Hud());
+    }
+  }
+
+  void startGame() {
+    inGame = true;
+    overlays.remove('MainMenu');
+  }
+
+  void gameOver() {
+    inGame = false;
+    overlays.add('GameOver');
+  }
+
+  void restart() {
+    inGame = true;
+    overlays.remove('GameOver');
+    reset();
+  }
+
+  void reset() {
+    starsCollected = 0;
+    health = 3;
+    initializeGame(false);
   }
 
   @override
@@ -89,15 +118,30 @@ class RacoonatorGame extends FlameGame
 
   @override
   void update(double dt) {
-    // spawn stars randomly on the screen
-    if (Random().nextInt(100) < 1) {
-      add(Star(
-        gridPosition: Vector2(
-        ,
-          Random().nextInt(3200).toDouble(),
-        ),
-        xOffset: 0,
-      ));
+    if (inGame) {
+      if (health > 0) {
+        // spawn stars randomly on the screen
+        if (Random().nextInt(100) < 5) {
+          add(Star(
+            gridPosition: Vector2(
+              Random().nextInt(100).toDouble(),
+              1,
+            ),
+            xOffset: 0,
+          ));
+        }
+        if (Random().nextInt(100) < 5) {
+          add(DevEnemy(
+            gridPosition: Vector2(
+              Random().nextInt(100).toDouble(),
+              1,
+            ),
+            xOffset: 0,
+          ));
+        }
+      } else {
+        gameOver();
+      }
     }
     super.update(dt);
   }

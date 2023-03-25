@@ -40,4 +40,14 @@ class HeartHealthComponent extends SpriteGroupComponent<HeartState>
 
     current = HeartState.available;
   }
+
+  @override
+  void update(double dt) {
+    if (game.health < heartNumber) {
+      current = HeartState.unavailable;
+    } else {
+      current = HeartState.available;
+    }
+    super.update(dt);
+  }
 }

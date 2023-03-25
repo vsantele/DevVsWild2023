@@ -55,18 +55,6 @@ class RacoonatorGame extends FlameGame
             xOffset: xPositionOffset,
           ));
           break;
-        case Star:
-          add(Star(
-            gridPosition: block.gridPosition,
-            xOffset: xPositionOffset,
-          ));
-          break;
-        case DevEnemy:
-          add(DevEnemy(
-            gridPosition: block.gridPosition,
-            xOffset: xPositionOffset,
-          ));
-          break;
       }
     }
   }
@@ -130,14 +118,14 @@ class RacoonatorGame extends FlameGame
             xOffset: 0,
           ));
         }
-        if (Random().nextInt(100) < 5) {
+        if (Random().nextInt(100) < 50) {
           add(DevEnemy(
-            gridPosition: Vector2(
-              Random().nextInt(100).toDouble(),
-              1,
-            ),
-            xOffset: 0,
-          ));
+              gridPosition: Vector2(
+                -1,
+                1,
+              ),
+              xOffset: 0,
+              side: Random().nextBool() ? 1 : -1));
         }
       } else {
         gameOver();

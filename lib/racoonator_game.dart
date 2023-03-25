@@ -118,7 +118,7 @@ class RacoonatorGame extends FlameGame
             xOffset: 0,
           ));
         }
-        if (Random().nextInt(100) < 50) {
+        if (Random().nextInt(100) < 10) {
           bool side = Random().nextBool();
           add(DevEnemy(xOffset: side ? size.x : -100, side: side ? -1 : 1));
         }

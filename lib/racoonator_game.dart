@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'managers/segment_manager.dart';
 import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/star.dart';
+import 'overlays/button.dart';
 import 'overlays/hud.dart';
 
 class RacoonatorGame extends FlameGame
@@ -86,6 +88,7 @@ class RacoonatorGame extends FlameGame
     add(_racoon);
     if (loadHud) {
       add(Hud());
+      add(Button());
     }
   }
 

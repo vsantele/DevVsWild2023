@@ -14,7 +14,8 @@ class RacoonatorGame extends FlameGame
     with
         HasKeyboardHandlerComponents,
         HasCollisionDetection,
-        HasTappableComponents {
+        HasTappableComponents,
+        HasDraggableComponents {
   final Vector2 velocity = Vector2.zero();
 
   late RacoonPlayer _racoon;

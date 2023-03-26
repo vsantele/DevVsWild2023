@@ -4,12 +4,12 @@ import '../racoonator_game.dart';
 import 'button.dart';
 
 class Command extends PositionComponent
-    with TapCallbacks, HasGameRef<RacoonatorGame> {
+    with TapCallbacks, DragCallbacks, HasGameRef<RacoonatorGame> {
   late Vector2 _initialPosition;
   late Vector2 _knobPosition;
   final Function _onTap;
   late Function onDoubleTab;
-  Map<int, int> _tapCount = {};
+  final Map<int, int> _tapCount = {};
 
   Command(this._onTap, {super.priority = -1});
 
@@ -23,37 +23,49 @@ class Command extends PositionComponent
   @override
   void onTapDown(TapDownEvent event) {
     var tapPosition = event.localPosition;
-    // _onTap(0);
-    if (tapPosition.y > size.y / 2 || true) {
-      print("enbas");
-      if (tapPosition.x <= size.x / 2) {
-        _tapCount[event.pointerId] = -1;
-        _onTap(-1);
-      } else {
-        _tapCount[event.pointerId] = 1;
-        _onTap(1);
-      }
+
+    if (tapPosition.x <= size.x / 2) {
+      _tapCount[event.pointerId] = -1;
+      _onTap(-1);
     } else {
-      print("en haut");
+      _tapCount[event.pointerId] = 1;
+      _onTap(1);
     }
   }
 
   @override
-  void onTapUp(TapUpEvent event) {
-    _onTap(_tapCount[event.pointerId]! * -1);
+  void onTapCancel(TapCancelEvent event) {
     _tapCount.remove(event.pointerId);
   }
 
   @override
-  void onTapCancel(TapCancelEvent event) {
-    _onTap(_tapCount[event.pointerId]! * -1);
+  void onTapUp(TapUpEvent event) {
+    _onTap((_tapCount[event.pointerId] ?? 0) * -1);
+    _tapCount.remove(event.pointerId);
+  }
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    var tapPosition = event.localPosition;
+    if (tapPosition.x <= size.x / 2) {
+      _tapCount[event.pointerId] = -1;
+      _onTap(-1);
+    } else {
+      _tapCount[event.pointerId] = 1;
+      _onTap(1);
+    }
+  }
+
+  @override
+  void onDragEnd(DragEndEvent event) {
+    _onTap((_tapCount[event.pointerId] ?? 0) * -1);
     _tapCount.remove(event.pointerId);
   }
 
   @override
   void onLoad() {
     size = Vector2(game.size.x, game.size.y);
-    add(Button(priority: 10));
+    add(Button());
     super.onLoad();
   }
 }

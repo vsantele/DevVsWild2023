@@ -4,7 +4,7 @@ import '../racoonator_game.dart';
 import 'button.dart';
 
 class Command extends PositionComponent
-    with TapCallbacks, DragCallbacks, HasGameRef<RacoonatorGame> {
+    with TapCallbacks, HasGameRef<RacoonatorGame> {
   late Vector2 _initialPosition;
   late Vector2 _knobPosition;
   final Function _onTap;

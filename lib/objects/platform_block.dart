@@ -1,8 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
-class PlatformBlock extends SpriteComponent with HasGameRef<RacoonatorGame> {
+class PlatformBlock extends SpriteComponent with HasGameRef<RaccoonatorGame> {
   final Vector2 gridPosition;
   double xOffset;
 

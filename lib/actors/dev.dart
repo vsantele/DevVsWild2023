@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:racoonator/objects/bullet.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/objects/bullet.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 class DevEnemy extends SpriteAnimationComponent
-    with CollisionCallbacks, HasGameRef<RacoonatorGame> {
+    with CollisionCallbacks, HasGameRef<RaccoonatorGame> {
   double xOffset;
   late int side;
 

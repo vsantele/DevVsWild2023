@@ -2,16 +2,16 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/extensions.dart';
 import 'package:flutter/material.dart';
-import '../racoonator_game.dart';
+import '../raccoonator_game.dart';
 
 class Button extends PositionComponent
-    with TapCallbacks, HasGameRef<RacoonatorGame> {
+    with TapCallbacks, HasGameRef<RaccoonatorGame> {
   late Vector2 _initialPosition;
   late Vector2 _knobPosition;
 
   double _baseRadius = 0;
 
-  Button({super.priority});
+  Button({super.priority = 100});
 
   @override
   void onTapDown(TapDownEvent event) {

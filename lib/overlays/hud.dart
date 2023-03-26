@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 import 'heart.dart';
 
-class Hud extends PositionComponent with HasGameRef<RacoonatorGame> {
+class Hud extends PositionComponent with HasGameRef<RaccoonatorGame> {
   Hud({
     super.position,
     super.size,

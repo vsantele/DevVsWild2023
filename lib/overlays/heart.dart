@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 enum HeartState {
   available,
@@ -7,7 +7,7 @@ enum HeartState {
 }
 
 class HeartHealthComponent extends SpriteGroupComponent<HeartState>
-    with HasGameRef<RacoonatorGame> {
+    with HasGameRef<RaccoonatorGame> {
   final int heartNumber;
 
   HeartHealthComponent({

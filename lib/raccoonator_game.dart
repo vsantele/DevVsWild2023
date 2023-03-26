@@ -3,14 +3,14 @@ import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'actors/racoon.dart';
+import 'actors/raccoon.dart';
 import 'managers/segment_manager.dart';
 import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'overlays/command.dart';
 import 'overlays/hud.dart';
 
-class RacoonatorGame extends FlameGame
+class RaccoonatorGame extends FlameGame
     with
         HasKeyboardHandlerComponents,
         HasCollisionDetection,
@@ -18,7 +18,7 @@ class RacoonatorGame extends FlameGame
         HasDraggableComponents {
   final Vector2 velocity = Vector2.zero();
 
-  late RacoonPlayer _racoon;
+  late RaccoonPlayer _raccoon;
 
   double horizontalDirection = 0;
 
@@ -28,7 +28,7 @@ class RacoonatorGame extends FlameGame
 
   bool inGame = false;
 
-  RacoonatorGame();
+  RaccoonatorGame();
 
   @override
   Future<void> onLoad() async {
@@ -72,10 +72,10 @@ class RacoonatorGame extends FlameGame
       loadGameSegments(i, (640 * i).toDouble());
     }
 
-    _racoon = RacoonPlayer(
+    _raccoon = RaccoonPlayer(
       position: Vector2(128, canvasSize.y - 70),
     );
-    add(_racoon);
+    add(_raccoon);
     if (loadHud) {
       add(Hud());
       // add(Button());
@@ -91,7 +91,7 @@ class RacoonatorGame extends FlameGame
 
   void triggerFire(bool value) {
     if (value) {
-      _racoon.fire();
+      _raccoon.fire();
     }
   }
 

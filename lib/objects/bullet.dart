@@ -1,9 +1,9 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 class Bullet extends SpriteComponent
-    with CollisionCallbacks, HasGameRef<RacoonatorGame> {
+    with CollisionCallbacks, HasGameRef<RaccoonatorGame> {
   // final Vector2 gridPosition;
   // double xOffset;
 

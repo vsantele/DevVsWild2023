@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/services.dart';
 
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 import '../objects/bullet.dart';
 import '../objects/ground_block.dart';
@@ -12,15 +12,15 @@ import '../objects/star.dart';
 
 import 'dev.dart';
 
-class RacoonPlayer extends SpriteAnimationComponent
-    with KeyboardHandler, CollisionCallbacks, HasGameRef<RacoonatorGame> {
+class RaccoonPlayer extends SpriteAnimationComponent
+    with KeyboardHandler, CollisionCallbacks, HasGameRef<RaccoonatorGame> {
   Vector2 velocity = Vector2.zero();
 
   double moveSpeed = 200;
   int horizontalDirection = 0;
   bool hitByEnemy = false;
 
-  RacoonPlayer({
+  RaccoonPlayer({
     required super.position,
   }) : super(size: Vector2.all(64), anchor: Anchor.center);
 

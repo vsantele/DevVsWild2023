@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
 class MainMenu extends StatelessWidget {
   // Reference to parent game.
-  final RacoonatorGame game;
+  final RaccoonatorGame game;
 
   const MainMenu({super.key, required this.game});
 

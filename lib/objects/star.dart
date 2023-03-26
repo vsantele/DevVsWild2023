@@ -2,9 +2,9 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
-import 'package:racoonator/racoonator_game.dart';
+import 'package:raccoonator/raccoonator_game.dart';
 
-class Star extends SpriteComponent with HasGameRef<RacoonatorGame> {
+class Star extends SpriteComponent with HasGameRef<RaccoonatorGame> {
   final Vector2 gridPosition;
   double xOffset;
 

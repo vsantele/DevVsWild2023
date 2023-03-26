@@ -1,25 +1,25 @@
-import 'dart:math';
-
-import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'actors/dev.dart';
 import 'actors/racoon.dart';
 import 'managers/segment_manager.dart';
 import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
-import 'objects/star.dart';
-import 'overlays/button.dart';
 import 'overlays/command.dart';
 import 'overlays/hud.dart';
 
 class RacoonatorGame extends FlameGame
-    with HasKeyboardHandlerComponents, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        HasCollisionDetection,
+        HasTappableComponents {
   final Vector2 velocity = Vector2.zero();
 
   late RacoonPlayer _racoon;
+
+  double horizontalDirection = 0;
 
   double objectSpeed = 0.0;
   int starsCollected = 0;
@@ -77,8 +77,20 @@ class RacoonatorGame extends FlameGame
     add(_racoon);
     if (loadHud) {
       add(Hud());
-      add(Button());
-      add(Command());
+      // add(Button());
+
+      add(Command(changeDirection));
+    }
+  }
+
+  void changeDirection(double direction) {
+    horizontalDirection += direction;
+    horizontalDirection = horizontalDirection.clamp(-1, 1);
+  }
+
+  void triggerFire(bool value) {
+    if (value) {
+      _racoon.fire();
     }
   }
 
@@ -114,19 +126,19 @@ class RacoonatorGame extends FlameGame
     if (inGame) {
       if (health > 0) {
         // spawn stars randomly on the screen
-        if (Random().nextInt(100) < 5) {
-          add(Star(
-            gridPosition: Vector2(
-              Random().nextInt(100).toDouble(),
-              1,
-            ),
-            xOffset: 0,
-          ));
-        }
-        if (Random().nextInt(100) < 10) {
-          bool side = Random().nextBool();
-          add(DevEnemy(xOffset: side ? size.x : -100, side: side ? -1 : 1));
-        }
+        // if (Random().nextInt(100) < 5) {
+        //   add(Star(
+        //     gridPosition: Vector2(
+        //       Random().nextInt(100).toDouble(),
+        //       1,
+        //     ),
+        //     xOffset: 0,
+        //   ));
+        // }
+        // if (Random().nextInt(100) < 5) {
+        //   bool side = Random().nextBool();
+        //   add(DevEnemy(xOffset: side ? size.x : -100, side: side ? -1 : 1));
+        // }
       } else {
         gameOver();
       }

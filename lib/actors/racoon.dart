@@ -1,16 +1,15 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/events.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+
 import 'package:racoonator/racoonator_game.dart';
 
 import '../objects/bullet.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
-import '../overlays/button.dart';
+
 import 'dev.dart';
 
 class RacoonPlayer extends SpriteAnimationComponent
@@ -85,11 +84,11 @@ class RacoonPlayer extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    velocity.x = horizontalDirection * moveSpeed;
+    velocity.x = game.horizontalDirection * moveSpeed;
     position += velocity * dt;
-    if (horizontalDirection < 0 && scale.x > 0) {
+    if (game.horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
-    } else if (horizontalDirection > 0 && scale.x < 0) {
+    } else if (game.horizontalDirection > 0 && scale.x < 0) {
       flipHorizontally();
     }
 

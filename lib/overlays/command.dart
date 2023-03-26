@@ -1,56 +1,59 @@
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
-import 'package:flame/extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:flame/experimental.dart';
 import '../racoonator_game.dart';
+import 'button.dart';
 
-class Command extends PositionComponent with HasGameRef<RacoonatorGame> {
+class Command extends PositionComponent
+    with TapCallbacks, DragCallbacks, HasGameRef<RacoonatorGame> {
   late Vector2 _initialPosition;
   late Vector2 _knobPosition;
+  final Function _onTap;
+  late Function onDoubleTab;
+  Map<int, int> _tapCount = {};
 
-  double _widthCommand = 0;
-  double _heightCommand = 0;
-
-  bool _isTouched = false;
+  Command(this._onTap, {super.priority = -1});
 
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    // place le moi à droite
-    _initialPosition = Vector2(gameSize.x / 2, 0);
-
+    _initialPosition = Vector2(game.size.x / 2, game.size.y);
     _knobPosition = _initialPosition.clone();
-    _widthCommand = gameSize.x / 2;
-    _heightCommand = gameSize.y;
   }
 
   @override
-  void render(Canvas canvas) {
-    final squarePaint = Paint()
-      ..color = Color.fromARGB(255, 181, 8, 8).withOpacity(0.5);
-    canvas.drawRect(
-        Rect.fromLTRB(
-            _initialPosition.x,
-            _initialPosition.y,
-            _widthCommand + _initialPosition.x,
-            _heightCommand + _initialPosition.y),
-        squarePaint);
-
-    final squarePaint2 = Paint()
-      ..color = Color.fromARGB(255, 8, 181, 8).withOpacity(0.5);
-    canvas.drawRect(
-        Rect.fromLTRB(0, 0, _initialPosition.x, _heightCommand), squarePaint2);
-  }
-
-  @override
-  void onTapDown(TapDownInfo details) {
-    if (details.eventPosition.game.toOffset().dx > _initialPosition.x) {
-      _isTouched = true;
+  void onTapDown(TapDownEvent event) {
+    var tapPosition = event.localPosition;
+    // _onTap(0);
+    if (tapPosition.y > size.y / 2 || true) {
+      print("enbas");
+      if (tapPosition.x <= size.x / 2) {
+        _tapCount[event.pointerId] = -1;
+        _onTap(-1);
+      } else {
+        _tapCount[event.pointerId] = 1;
+        _onTap(1);
+      }
+    } else {
+      print("en haut");
     }
   }
 
   @override
-  void onTapUp(TapUpInfo details) {
-    _isTouched = false;
+  void onTapUp(TapUpEvent event) {
+    _onTap(_tapCount[event.pointerId]! * -1);
+    _tapCount.remove(event.pointerId);
+  }
+
+  @override
+  void onTapCancel(TapCancelEvent event) {
+    _onTap(_tapCount[event.pointerId]! * -1);
+    _tapCount.remove(event.pointerId);
+  }
+
+  @override
+  void onLoad() {
+    size = Vector2(game.size.x, game.size.y);
+    add(Button(priority: 10));
+    super.onLoad();
   }
 }

@@ -14,7 +14,7 @@ class Button extends PositionComponent
   Button({super.priority});
 
   @override
-  void onTapUp(TapUpEvent event) {
+  void onTapDown(TapDownEvent event) {
     print("fire");
   }
 

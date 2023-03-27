@@ -1,40 +1,46 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/widgets.dart';
 import 'package:raccoonator/raccoonator_game.dart';
 
+import '../data/weapons.dart';
+
 final style = TextStyle(
-  color: BasicPalette.darkRed.color,
+  color: BasicPalette.yellow.color,
   fontSize: 18,
-  backgroundColor: BasicPalette.lightGray.color,
+  backgroundColor: BasicPalette.darkGray.color,
 );
 final regular = TextPaint(style: style);
 
-class Bullet extends TextComponent
+class WeaponObject extends TextComponent
     with CollisionCallbacks, HasGameRef<RaccoonatorGame> {
   // final Vector2 gridPosition;
   // double xOffset;
+  final double initX;
 
   double moveSpeed = 300;
   int horizontalDirection = 0;
-  String name = 'Bullet';
+  Weapon weapon;
 
   final Vector2 velocity = Vector2.zero();
 
-  Bullet({
-    required this.horizontalDirection,
-    required this.name,
-    required super.position,
-  }) : super(size: Vector2.all(48), anchor: Anchor.center, priority: 50);
+  WeaponObject({required this.weapon, required this.initX})
+      : super(size: Vector2.all(48), anchor: Anchor.center, priority: 50);
 
   @override
   Future<void> onLoad() async {
-    text = name;
+    text = weapon.name;
     textRenderer = regular;
-    position.x += horizontalDirection * size.x;
-
-    add(RectangleHitbox());
+    position = Vector2(
+      initX.clamp(2 * size.x, game.size.x - 2 * size.x),
+      game.size.y - 80,
+    );
+    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    add(MoveEffect.by(Vector2(0, 20), EffectController(duration: 0.5)));
   }
 
   @override
@@ -42,29 +48,17 @@ class Bullet extends TextComponent
     velocity.x = horizontalDirection * moveSpeed;
     position += velocity * dt;
 
-    //remove bullet if it goes off screen
     if (position.x < size.x / 2) {
-      removeFromParent();
+      position.x = size.x / 2;
     } else if (position.x > game.size.x - size.x / 2) {
+      position.x = game.size.x - size.x / 2;
+    }
+
+    if (Random().nextInt(100) < 1) {
       removeFromParent();
     }
 
     if (game.health <= 0) removeFromParent();
     super.update(dt);
-  }
-
-  @override
-  void render(Canvas canvas) {
-    canvas.drawRect(
-      Rect.fromLTWH(
-        position.x - size.x / 2,
-        position.y - size.y / 2,
-        size.x,
-        size.y,
-      ),
-      Paint()..color = const Color(0x88FFFFFF),
-    );
-
-    super.render(canvas);
   }
 }

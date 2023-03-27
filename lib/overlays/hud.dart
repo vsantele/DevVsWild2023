@@ -19,6 +19,8 @@ class Hud extends PositionComponent with HasGameRef<RaccoonatorGame> {
 
   late TextComponent _scoreTextComponent;
 
+  late TextComponent _waveTextComponent;
+
   @override
   Future<void>? onLoad() async {
     _scoreTextComponent = TextComponent(
@@ -26,13 +28,26 @@ class Hud extends PositionComponent with HasGameRef<RaccoonatorGame> {
       textRenderer: TextPaint(
         style: const TextStyle(
           fontSize: 32,
-          color: Color.fromRGBO(10, 10, 10, 1),
+          color: Color.fromRGBO(255, 201, 14, 1),
         ),
       ),
       anchor: Anchor.center,
       position: Vector2(game.size.x - 60, 20),
     );
     add(_scoreTextComponent);
+
+    _waveTextComponent = TextComponent(
+      text: 'Wave ${game.waveIndex + 1}}}',
+      textRenderer: TextPaint(
+        style: const TextStyle(
+          fontSize: 32,
+          color: Color.fromRGBO(255, 201, 14, 1),
+        ),
+      ),
+      anchor: Anchor.center,
+      position: Vector2(60, 60),
+    );
+    add(_waveTextComponent);
 
     final starSprite = await game.loadSprite('star.png');
     add(

@@ -7,31 +7,36 @@ import 'package:raccoonator/objects/bullet.dart';
 import 'package:raccoonator/raccoonator_game.dart';
 
 class DevEnemy extends SpriteAnimationComponent
-    with CollisionCallbacks, HasGameRef<RaccoonatorGame> {
+    with CollisionCallbacks, HasGameRef<RaccoonatorGame>, Notifier {
   double xOffset;
   late int side;
+  late int health;
 
   final Vector2 velocity = Vector2.zero();
 
   DevEnemy({
     required this.xOffset,
     required this.side,
-  }) : super(size: Vector2.all(64), anchor: Anchor.bottomLeft);
+    this.health = 3,
+  }) : super(size: Vector2.all(64), anchor: Anchor.bottomLeft, priority: 100);
 
   @override
   Future<void> onLoad() async {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('water_enemy.png'),
+      game.images.fromCache('dev_walk_6.png'),
       SpriteAnimationData.sequenced(
-        amount: 2,
-        textureSize: Vector2.all(16),
-        stepTime: 0.70,
+        amount: 6,
+        textureSize: Vector2(24, 37),
+        stepTime: 0.15,
       ),
     );
     position = Vector2(
       (xOffset + (size.x / 2)),
       game.size.y - (size.y),
     );
+    if (side == -1) {
+      flipHorizontally();
+    }
     add(RectangleHitbox()..collisionType = CollisionType.passive);
     add(
       MoveEffect.by(
@@ -46,9 +51,14 @@ class DevEnemy extends SpriteAnimationComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Bullet) {
-      removeFromParent();
       other.removeFromParent();
-      game.starsCollected++;
+      health--;
+      if (health == 0) {
+        removeFromParent();
+        notifyListeners();
+      } else if (health < 0) {
+        removeFromParent();
+      }
     }
 
     super.onCollision(intersectionPoints, other);

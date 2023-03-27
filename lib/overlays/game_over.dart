@@ -27,9 +27,9 @@ class GameOver extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Game Over',
-                style: TextStyle(
+              Text(
+                'Game Over! Your score: ${game.starsCollected} (best: ${game.bestScore}))',
+                style: const TextStyle(
                   color: whiteTextColor,
                   fontSize: 24,
                 ),
